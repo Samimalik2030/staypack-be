@@ -33,6 +33,10 @@ export class User extends BaseSchema {
     @Exclude()
     @Prop()
     password: string;
+
+    @Exclude()
+    @Prop()
+    confirmPassword: string;
   
     @Exclude()
     @Prop({ default: 0 })

@@ -7,12 +7,17 @@ import { SignInDto } from '../dto/sign-in.dto';
 import { forgotPasswordDto } from '../dto/forgotPassword.dto';
 import { ResetPasswordDto } from '../dto/resetPassword.dto';
 import { TokenService } from 'src/jwt/jwt.service';
+import { OtpService } from 'src/otp/service/otp.service';
+import { OtpType } from 'src/otp/types';
+import { verifyOTPDto } from '../dto/verify-otp.dto';
 
 @Injectable()
 export class UserService {
     constructor(
       @InjectModel(User.name) private readonly UserModel:Model<User>,
-      private readonly jwtTokenService:TokenService
+      private readonly jwtTokenService:TokenService,
+      private readonly otpService:OtpService
+
     
     ){}
 
@@ -61,19 +66,24 @@ export class UserService {
         throw new NotFoundException ('user not found')
     }
   const otp =  Math.floor(100000 + Math.random() * 900000);
-    return otp
+     await this.otpService.storeOtp({
+      otp:otp,
+      type:OtpType.FORGOT_PASSWORD,
+      user:user
+     })
+    return {
+      message:`Otp sent to your email.Please use this otp ${otp}`
+    }
   }
 
 
-  async updatePassword(data:ResetPasswordDto){
- const   user = await this.UserModel.findOne({
-    email:data.email
- })
- if(!user){
-    throw new  NotFoundException('user not found')
- }
- const updatedPassword = await this.UserModel.findOne(user.id,{
-    password:data.password
+ 
+
+  async updatePassword(id:string,password:string,confirmPassword:string){
+
+ const updatedPassword = await this.UserModel.findByIdAndUpdate(id,{
+    password:password,
+    confirmPassword:confirmPassword
  },{
     returnDocument:'after'
   }
