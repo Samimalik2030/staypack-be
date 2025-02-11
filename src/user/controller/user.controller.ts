@@ -11,6 +11,7 @@ import * as Multer from 'multer';  // Import Multer
 import { verifyOTPDto } from '../dto/verify-otp.dto';
 import { OtpService } from 'src/otp/service/otp.service';
 import { OtpType } from 'src/otp/types';
+import { retry } from 'rxjs';
 
 
 
@@ -48,6 +49,7 @@ export class UserController {
     @Post('verify-otp')
     async verifyOTP(@Body() body:verifyOTPDto){
         const user = await this.userService.findByEmail(body.email)
+        console.log(user)
         if(!user){
             throw new NotFoundException("User not found")
         }
@@ -66,12 +68,15 @@ export class UserController {
         if(!foundUser){
             throw new NotFoundException('User is not found')
         }
+        console.log(foundUser,'found user')
         const found = await this.otpService.verifyOtp(body.otp,OtpType.FORGOT_PASSWORD,foundUser)
+
              if(!found){
               throw new NotFoundException('Invalid otp')
              }
 
              const updatedUser= await this.userService.updatePassword(foundUser.id,body.password,body.confirmPassword)
+             return updatedUser
         
     }
 

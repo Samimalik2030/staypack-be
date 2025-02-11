@@ -20,12 +20,16 @@ export class OtpService {
 
 
     async verifyOtp(otp:number,type:OtpType,user:User){
-        return await this.otpModel.findOne({
+      console.log(otp,type,user)
+
+     const verifiedOtp =  await this.otpModel.findOne({
            otp:otp,
            type:type,
            user:user
            
-        })    
+        }) 
+        console.log(verifiedOtp)
+        return verifiedOtp   
     }
 
 
