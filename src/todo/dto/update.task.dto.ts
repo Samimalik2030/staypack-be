@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsString,
-  IsOptional,
-  IsEnum,
-  IsDate,
-  IsBoolean,
-} from 'class-validator';
+import { IsString, IsOptional, IsEnum, IsBoolean } from 'class-validator';
 import { TaskPriority, TaskRecurrence, TaskCategory } from '../types';
 
 export class UpdateTaskDto {
@@ -33,12 +27,10 @@ export class UpdateTaskDto {
 
   @ApiProperty({ description: 'Deadline for the task', required: false })
   @IsOptional()
-  @IsDate()
   dueDate?: Date;
 
   @ApiProperty({ description: 'Start date of the task', required: false })
   @IsOptional()
-  @IsDate()
   startDate?: Date;
 
   @ApiProperty({

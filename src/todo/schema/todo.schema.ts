@@ -25,18 +25,21 @@ export class Task extends BaseSchema {
   @Prop()
   description?: string;
 
+  @ApiProperty({ enum: TaskStatus })
   @Prop({ default: TaskStatus.PENDING, enum: TaskStatus })
   status: TaskStatus;
 
   @Prop({ default: TaskPriority.MEDIUM, enum: TaskPriority })
+  @ApiProperty({ enum: TaskPriority })
   priority: TaskPriority;
 
-  @Prop({ type: String, enum: TaskRecurrence, default: null })
-  recurrenceType?: TaskRecurrence;
+  @Prop({ enum: TaskRecurrence, default: null })
+  @ApiProperty({ enum: TaskRecurrence })
+  recurrenceType: TaskRecurrence;
 
   @ApiProperty({ description: 'Deadline for the task', required: false })
   @Prop({ type: Date })
-  dueDate?: Date;
+  dueDate: Date;
 
   @ApiProperty({ description: 'Start date of the task', required: false })
   @Prop({ type: Date })
@@ -47,7 +50,7 @@ export class Task extends BaseSchema {
     required: false,
   })
   @Prop({ type: Date })
-  completedAt?: Date;
+  completedAt: Date;
 
   @ApiProperty({ description: 'Whether the task is recurring', default: false })
   @Prop({ default: false })
@@ -66,7 +69,7 @@ export class Task extends BaseSchema {
     required: false,
   })
   @Prop({ default: '' })
-  notes?: string;
+  notes: string;
 }
 
 export const TaskSchema = MongoFactory.createSchema(Task);
