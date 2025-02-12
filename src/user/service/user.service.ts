@@ -9,7 +9,6 @@ import { ResetPasswordDto } from '../dto/resetPassword.dto';
 import { TokenService } from 'src/jwt/jwt.service';
 import { OtpService } from 'src/otp/service/otp.service';
 import { OtpType } from 'src/otp/types';
-import { verifyOTPDto } from '../dto/verify-otp.dto';
 
 @Injectable()
 export class UserService {
@@ -26,9 +25,14 @@ export class UserService {
             email:email
         })
     }
+    async findOne(data:Partial<User>){
+     return await this.UserModel.findOne(data)
+    }
 
     async signUp(data:SignUpDto){
-      const createdUser = await this.UserModel.create(data)
+      const createdUser = await this.UserModel.create({
+        email:data.email
+      })
       const token = await this.jwtTokenService.generateToken({
         email:createdUser.email,
         id:createdUser._id,
@@ -42,7 +46,8 @@ export class UserService {
   
   async signIn(data:SignInDto){
     const user = await this.UserModel.findOne({
-        email:data.email
+        email:data.email,
+        password:data.password
     })
     if(!user){
         throw new NotFoundException('invalid credantial')

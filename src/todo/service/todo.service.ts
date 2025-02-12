@@ -22,9 +22,10 @@ export class TodoService {
   }
 
   // Get Task by ID
-  async findOne(id: string): Promise<Task> {
-    const task = await this.taskModel.findById(id).exec();
-    if (!task) throw new NotFoundException(`Task with ID ${id} not found`);
+  async findOne(data: Partial<Task>): Promise<Task> {
+  
+    const task = await this.taskModel.findOne(data).exec();
+    if (!task) throw new NotFoundException(`Task with ID  not found`);
     return task;
   }
 

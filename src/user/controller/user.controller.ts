@@ -12,6 +12,7 @@ import { verifyOTPDto } from '../dto/verify-otp.dto';
 import { OtpService } from 'src/otp/service/otp.service';
 import { OtpType } from 'src/otp/types';
 import { retry } from 'rxjs';
+import { Task } from 'src/todo/schema/todo.schema';
 
 
 
@@ -22,14 +23,18 @@ export class UserController {
     ){}
 
     @Post("signUp")
-    async signUp(@Body() body:SignUpDto){
-        const foundUser = await this.userService.findByEmail(body.email)
+    async signUp(@Body() body:SignUpDto,){
+        
+        const foundUser = await this.userService.findOne({
+            email:body.email
+        })
         if(foundUser){
             throw new UnprocessableEntityException('User already exists')
         }
         const registeredUser = await this.userService.signUp(body)
         return registeredUser
     }
+
 
     @Post("sign-in")
     async signIn(@Body() data:SignInDto){

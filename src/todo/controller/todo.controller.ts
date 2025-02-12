@@ -36,7 +36,9 @@ export class TodoController {
   @Get(':id')
   @ApiResponse({ type: Task, status: 200 })
   async findOne(@Param('id') id: string): Promise<Task> {
-    return await this.taskService.findOne(id);
+    return await this.taskService.findOne({
+      id:id
+    });
   }
 
   // Update Task
