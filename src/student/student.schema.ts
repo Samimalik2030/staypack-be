@@ -3,10 +3,12 @@ import { ApiProperty } from "@nestjs/swagger";
 import { BaseSchema } from "src/app/decorators/base.schema";
 import { MongoFactory } from "src/app/decorators/mongo-factory";
 import { MongoSchema } from "src/app/decorators/mongo.schema";
-import { Schema as MongooseSchema } from "mongoose";
+
+
+
 
 @Schema()
-export class PersonalInformationSchema {
+export class EducationalInformationSchema {
     
     @Prop({ type: String })
     firstName: string;
@@ -17,15 +19,6 @@ export class PersonalInformationSchema {
 }
 
 
-const PersonalInformationMongoSchema = MongoFactory.createSchema(PersonalInformationSchema);
-
-@MongoSchema()
-export class Student extends BaseSchema {
-
-    @Prop({ type: PersonalInformationMongoSchema }) 
-    @ApiProperty({ type: () => PersonalInformationSchema })
-    personalInformation: PersonalInformationSchema;
-}
+const educationalInformationSchema = MongoFactory.createSchema(EducationalInformationSchema);
 
 
-export const studentSchema = MongoFactory.createSchema(Student);
