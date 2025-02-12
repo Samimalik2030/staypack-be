@@ -10,7 +10,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { AppService } from './service/app.service';
 import { UserModule } from 'src/user/user.module';
-
+import { TodoModule } from 'src/todo/todo.module';
 
 @Module({
   imports: [
@@ -24,15 +24,15 @@ import { UserModule } from 'src/user/user.module';
       }),
       inject: [ConfigService],
     }),
-    UserModule
-  ], 
+    UserModule,
+    TodoModule,
+  ],
   controllers: [AppController],
   providers: [
     { provide: APP_PIPE, useClass: ClassValidationPipe },
     { provide: APP_INTERCEPTOR, useClass: SchemaToClassInterceptor },
     { provide: APP_INTERCEPTOR, useClass: AuthorizationInterceptor },
     AppService,
- 
   ],
 })
 export class AppModule {}
