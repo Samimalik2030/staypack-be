@@ -9,6 +9,7 @@ import { ResetPasswordDto } from '../dto/resetPassword.dto';
 import { TokenService } from 'src/jwt/jwt.service';
 import { OtpService } from 'src/otp/service/otp.service';
 import { OtpType } from 'src/otp/types';
+import { verifyOTPDto } from '../dto/verify-otp.dto';
 
 @Injectable()
 export class UserService {

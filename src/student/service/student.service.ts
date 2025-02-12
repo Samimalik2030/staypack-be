@@ -22,4 +22,7 @@ export class StudentService {
         returnDocument:'after'
         })
     }
+    async delete(id:string){
+        return await this.studentModel.findByIdAndDelete(id)
+    }
 }
