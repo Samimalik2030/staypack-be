@@ -5,3 +5,6 @@ export enum Role {
     HOTEL_OWNER = 'Hotel Owner',
     DRY_CLEANER = 'Dry Cleaner'
 }
+
+
+
