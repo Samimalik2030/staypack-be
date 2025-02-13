@@ -5,24 +5,18 @@ import { AppModule } from './app/app.module';
 import { ClassValidationPipe } from './app/pipes/validation.pipe';
 
 async function bootstrap() {
+  // Create the Nest application and enable CORS
   const app = await NestFactory.create(AppModule);
-  app.enableCors(
-    {
-      origin: "http://localhost:3005",
-      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-      credentials: true, 
-    }
-  );
-  
+  app.enableCors();
 
   // Read package.json file for version information
   let version = '1.0.0';
 
-  // const content = fs.readFileSync(__dirname + '/../../package.json').toString();
-  // if (content) {
-  //   const json = JSON.parse(content); 
-  //   version = json.version;
-  // }
+//   const content = fs.readFileSync(__dirname + '/../../package.json').toString();
+//   if (content) {
+//     const json = JSON.parse(content);
+//     version = json.version;
+//   }
 
   // Use validation pipe for input validation
   app.useGlobalPipes(new ClassValidationPipe());
@@ -30,27 +24,13 @@ async function bootstrap() {
   // Swagger configuration
   const config = new DocumentBuilder()
     .setTitle(process.env.APP_NAME || 'TN Nest App')
-    .setVersion(`${version}`)
-    .addApiKey({ type: 'apiKey' }, 'x-api-key');
+    .setVersion(`${version}`);
 
+  const doc = SwaggerModule.createDocument(app, config.addBearerAuth().build());
 
-
-
-  const internal = SwaggerModule.createDocument(
-    app,
-    config.addBearerAuth().build(),
-  );
-  internal.paths = Object.keys(internal.paths)
-    .filter((path) => !path.startsWith('/t8y'))
-    .reduce((obj, key) => {
-      obj[key] = internal.paths[key];
-      return obj;
-    }, {});
-  SwaggerModule.setup('api', app, internal);
+  SwaggerModule.setup('api', app, doc);
 
   // Start the application
   await app.listen(process.env.PORT || 3000);
-
-
 }
 bootstrap();

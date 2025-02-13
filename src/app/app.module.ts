@@ -11,6 +11,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { AppService } from './service/app.service';
 import { UserModule } from 'src/user/user.module';
 import { TodoModule } from 'src/todo/todo.module';
+import { StudentModule } from 'src/student/student.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { TodoModule } from 'src/todo/todo.module';
     }),
     UserModule,
     TodoModule,
+    StudentModule
   ],
   controllers: [AppController],
   providers: [
