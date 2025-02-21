@@ -22,5 +22,6 @@ import { OtpModule } from 'src/otp/otp.module';
   ],
   controllers: [UserController],
   providers: [UserService, TokenService],
+  exports: [UserService],
 })
 export class UserModule {}

@@ -3,9 +3,10 @@ import { ApiProperty } from "@nestjs/swagger";
 import { MongoFactory } from "src/app/decorators/mongo-factory";
 import { MongoSchema } from "src/app/decorators/mongo.schema";
 import { LaundryPlan } from "../types";
+import { BaseSchema } from "src/app/decorators/base.schema";
 
 @MongoSchema()
-export class LaundryPreferenceSchema{
+export class LaundryPreference extends BaseSchema{
     @Prop({enum:LaundryPlan,required:true})
     @ApiProperty({enum:LaundryPlan})
     laundryPlan:LaundryPlan
@@ -14,4 +15,4 @@ export class LaundryPreferenceSchema{
     @ApiProperty({type:String})
     request:string
 }
-export const laundryPreferenceMongoSchema = MongoFactory.createSchema(LaundryPreferenceSchema)
+export const laundryPreferenceMongoSchema = MongoFactory.createSchema(LaundryPreference)

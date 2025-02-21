@@ -4,6 +4,7 @@ import { Task } from '../schema/todo.schema';
 import { Model } from 'mongoose';
 import { CreateTaskDto } from '../dto/create.task.dto';
 import { UpdateTaskDto } from '../dto/update.task.dto';
+import { UpdateStatusDTO } from '../dto/update.status.dto';
 
 @Injectable()
 export class TodoService {
@@ -20,6 +21,10 @@ export class TodoService {
   async findAll(): Promise<Task[]> {
     return await this.taskModel.find().exec();
   }
+  async findById(id:string){
+    return await this.taskModel.findById(id)
+  }
+    
 
   // Get Task by ID
   async findOne(data: Partial<Task>): Promise<Task> {
@@ -43,4 +48,12 @@ export class TodoService {
     const task = await this.taskModel.findByIdAndDelete(id).exec();
     if (!task) throw new NotFoundException(`Task with ID ${id} not found`);
   }
+  //
+  async updateStatus(id:string,data:UpdateStatusDTO){
+ const updatedStatus = await this.taskModel.findByIdAndUpdate(id,data,{
+  returnDocument:'after'
+ })
+ return updatedStatus
+}
+
 }

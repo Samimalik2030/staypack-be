@@ -1,10 +1,11 @@
 import { Prop } from "@nestjs/mongoose";
 import { ApiProperty } from "@nestjs/swagger";
+import { BaseSchema } from "src/app/decorators/base.schema";
 import { MongoFactory } from "src/app/decorators/mongo-factory";
 import { MongoSchema } from "src/app/decorators/mongo.schema";
 
 @MongoSchema()
-export class AccomodationPreferenceSchema{
+export class AccomodationPreference extends BaseSchema{
     @Prop({type:String,required:true})
     @ApiProperty({type:String})
     type:string
@@ -25,4 +26,4 @@ export class AccomodationPreferenceSchema{
     @ApiProperty({type:Date})
     dateOut:Date
 }
-export const AccomodationPreferenceMongoSchema = MongoFactory.createSchema(AccomodationPreferenceSchema)
+export const AccomodationPreferenceMongoSchema = MongoFactory.createSchema(AccomodationPreference)

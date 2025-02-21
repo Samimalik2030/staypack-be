@@ -14,6 +14,7 @@ import { TodoModule } from 'src/todo/todo.module';
 import { StudentModule } from 'src/student/student.module';
 import { ImageKitModule } from 'src/image-kit/image-kit.module';
 import { MailerModule } from 'src/mailer/mailer.module';
+import { HostModule } from 'src/host/host.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { MailerModule } from 'src/mailer/mailer.module';
     StudentModule,
     ImageKitModule,
     MailerModule,
+    HostModule,
   ],
   controllers: [AppController],
   providers: [
