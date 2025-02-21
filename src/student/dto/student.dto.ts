@@ -3,49 +3,13 @@ import { IsDate, IsEnum, IsNotEmpty, IsString } from "class-validator";
 import { GenderType } from "../types";
 
 export class CreateStudentDTO{
-     @ApiProperty({type:Date,default:null})
-        @IsDate()
+     @ApiProperty({type:String,default:true,example:"2025-02-13T12:00:00.000Z"})
         @IsNotEmpty()
-        dateOfBirth:Date
+        dateOfBirth:String
     
-        @ApiProperty({enum:GenderType,default:null})
+        @ApiProperty({enum:GenderType,default:true})
         @IsEnum(GenderType)
         @IsNotEmpty()
         gender:GenderType
 }
-export class UpdateStudentDTO{
-    @ApiProperty({type:String,default:null})
-    @IsString()
-    @IsNotEmpty()
-    firstName:string
 
-    @ApiProperty({type:String,default:null})
-    @IsString()
-    @IsNotEmpty()
-    lastName:string
-
-    @ApiProperty({type:String,default:null})
-    @IsString()
-    @IsNotEmpty()
-    emailName:string
-
-    @ApiProperty({type:String,default:null})
-    @IsString()
-    @IsNotEmpty()
-    phoneNumber:string
-
-    @ApiProperty({type:Date,default:null})
-    @IsDate()
-    @IsNotEmpty()
-    dateOfBirth:Date
-
-    @ApiProperty({enum:GenderType,default:null})
-    @IsEnum(GenderType)
-    @IsNotEmpty()
-    gender:GenderType
-
-    @ApiProperty({type:String,default:null})
-    @IsString()
-    @IsNotEmpty()
-    profilePicture:string
-}

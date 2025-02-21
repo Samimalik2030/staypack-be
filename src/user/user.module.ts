@@ -17,10 +17,12 @@ import { OtpModule } from 'src/otp/otp.module';
         audience: 'www.tn-nest.com',
         issuer: 'www.tn-nest.com',
       },
-    }),
+    }), 
      OtpModule
   ],
   controllers: [UserController],
-  providers: [UserService,TokenService]
+  providers: [UserService,TokenService],
+  exports:[UserService],
+
 })
 export class UserModule {}

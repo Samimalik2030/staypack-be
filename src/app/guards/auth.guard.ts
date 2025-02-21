@@ -19,8 +19,7 @@ import { UserService } from 'src/user/service/user.service';
     ) {}
     async canActivate(context: ExecutionContext): Promise<boolean> {
       const request = context.switchToHttp().getRequest();
-      const token =
-        this.extractTokenFromHeader(request) || 'your-secret-key';
+      const token = this.extractTokenFromHeader(request) || 'your-secret-key';
   
       if (!token) {
         throw new UnauthorizedException();

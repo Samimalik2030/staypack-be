@@ -12,6 +12,7 @@ import { AppService } from './service/app.service';
 import { UserModule } from 'src/user/user.module';
 import { TodoModule } from 'src/todo/todo.module';
 import { StudentModule } from 'src/student/student.module';
+import { HostModule } from 'src/host/host.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { StudentModule } from 'src/student/student.module';
     }),
     UserModule,
     TodoModule,
-    StudentModule
+    StudentModule,
+    HostModule
   ],
   controllers: [AppController],
   providers: [

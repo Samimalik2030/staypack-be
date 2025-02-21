@@ -1,35 +1,20 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString } from "class-validator";
 
-export class CreateEducationalInformationDTO{
-    @ApiProperty({type:String,default:null})
-    @IsString()
-    @IsNotEmpty()
-   collegeName:string
 
-   @ApiProperty({type:String,default:null})
+export class UpdateEducationalInformationDTO {
+   @ApiProperty({ type: String, default: "XYZ University" }) // Default value: A sample university name
    @IsString()
    @IsNotEmpty()
-   degreeProgramme:string
-
-   @ApiProperty({type:String,default:null})
+   collegeName: string;
+ 
+   @ApiProperty({ type: String, default: "Computer Science" }) // Default value: A common degree program
    @IsString()
    @IsNotEmpty()
-   yearOfStudy:string
-}
-   export class UpdateEducationalInformationDTO{
-    @ApiProperty({type:String,default:null})
-    @IsString()
-    @IsNotEmpty()
-   collegeName:string
-
-   @ApiProperty({type:String,default:null})
+   degreeProgramme: string;
+ 
+   @ApiProperty({ type: String, default: "2nd Year" }) // Default value: A realistic year of study
    @IsString()
    @IsNotEmpty()
-   degreeProgramme:string
-
-   @ApiProperty({type:String,default:null})
-   @IsString()
-   @IsNotEmpty()
-   yearOfStudy:string
-}
+   yearOfStudy: string;
+ }

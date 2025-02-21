@@ -2,26 +2,14 @@ import { ApiProperty } from "@nestjs/swagger";
 import { LaundryPlan } from "../types";
 import { IsEnum, IsNotEmpty, IsString } from "class-validator";
 
-export class CreateLaundryPreferenceDTO{
-    @ApiProperty({enum:LaundryPlan,default:null})
+export class UpdateLaundryPreferenceDTO {
+    @ApiProperty({ enum: LaundryPlan, default: LaundryPlan.BIWEEKLY}) // Default value: Basic plan from the enum
     @IsEnum(LaundryPlan)
     @IsNotEmpty()
-    laundryPlan:LaundryPlan
-
-    @ApiProperty({type:String,default:null})
+    laundryPlan: LaundryPlan;
+  
+    @ApiProperty({ type: String, default: "Wash and fold required by next day" }) // Default: A typical request
     @IsString()
     @IsNotEmpty()
-   request:string
-}
-
-export class UpdateLaundryPreferenceDTO{
-    @ApiProperty({enum:LaundryPlan,default:null})
-    @IsEnum(LaundryPlan)
-    @IsNotEmpty()
-    laundryPlan:LaundryPlan
-
-    @ApiProperty({type:String,default:null})
-    @IsString()
-    @IsNotEmpty()
-   request:string
-}
+    request: string;
+  }

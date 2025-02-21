@@ -1,4 +1,4 @@
-import { Body, Controller, Get, NotAcceptableException, NotFoundException, Patch, Post, UnprocessableEntityException, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, NotAcceptableException, NotFoundException, Param, Patch, Post, UnprocessableEntityException, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { UserService } from '../service/user.service';
 import { SignUpDto } from '../dto/sign-up.dto';
 import { SignInDto } from '../dto/sign-in.dto';
@@ -103,6 +103,11 @@ export class UserController {
     async changeAvatar(@UploadedFile() file:Express.Multer.File){
 
      console.log(file,'file')
+    }
+    @Get(":id")
+    async getUser(@Param() id:string){
+        const foundUser = await this.userService.getUser(id)
+        return foundUser
     }
   
    

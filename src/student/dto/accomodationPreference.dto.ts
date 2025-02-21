@@ -1,57 +1,30 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsDate, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
-export class CreateAccomodationDTO{
-    @ApiProperty({type:String,default:null})
-    @IsString()
-    @IsNotEmpty()
-    type:string
 
-    @ApiProperty({type:String,default:null})
-    @IsString()
-    @IsNotEmpty()
-    location:string
 
-    @ApiProperty({type:Number,default:null})
-    @IsString()
-    @IsNumber()
-    budgetRange:number
+export class UpdateAccomodationPreferenceDTO {
+  @ApiProperty({ type: String, default: "Shared" }) // Default value: Shared accommodation type
+  @IsString()
+  @IsNotEmpty()
+  type: string;
 
-    
-    @ApiProperty({type:Date,default:null})
-    @IsDate()
-    @IsNotEmpty()
-    dateIn:Date
+  @ApiProperty({ type: String, default: "City Center" }) // Default value: City Center
+  @IsString()
+  @IsNotEmpty()
+  location: string;
 
-    @ApiProperty({type:Date,default:null})
-    @IsDate()
-    @IsNotEmpty()
-    dateOut:Date
-}
-export class UpdateAccomodationPreferenceDTO{
-    @ApiProperty({type:String,default:null})
-    @IsString()
-    @IsNotEmpty()
-    type:string
+  @ApiProperty({ type: Number, default: 5000 }) // Default value: 5000
+  @IsNumber()
+  @IsNotEmpty()
+  budgetRange: number;
 
-    @ApiProperty({type:String,default:null})
-    @IsString()
-    @IsNotEmpty()
-    location:string
+  @ApiProperty({ type: String, default: new Date(new Date().setDate(new Date().getDate() + 7)) }) // Default: 7 days from now
+  @IsNotEmpty()
+  dateIn: String;
 
-    @ApiProperty({type:Number,default:null})
-    @IsString()
-    @IsNumber()
-    budgetRange:number
-
-    
-    @ApiProperty({type:Date,default:null})
-    @IsDate()
-    @IsNotEmpty()
-    dateIn:Date
-
-    @ApiProperty({type:Date,default:null})
-    @IsDate()
-    @IsNotEmpty()
-    dateOut:Date
+  @ApiProperty({ type: Date, default: new Date(new Date().setDate(new Date().getDate() + 30)) }) // Default: 30 days from now
+  @IsDate()
+  @IsNotEmpty()
+  dateOut: Date;
 }
