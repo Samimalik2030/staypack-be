@@ -9,16 +9,17 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
 import { User } from '../schema/user.schema';
-import { REQUEST } from '@nestjs/core';
-import { TokenService } from 'src/jwt/jwt.service';
-import { MailerService } from 'src/mailer/service/mailer.service';
 import { BcryptService } from 'src/shared/service/bcrypt.service';
+import { REQUEST } from '@nestjs/core';
+import { MailerService } from 'src/mailer/service/mailer.service';
 import { MongoPopulateOptions, MongoQueryService } from 'src/app/types';
 import { SignInDto } from '../dto/sign-in.dto';
 import { MessageDto } from '../dto/message.dto';
-import { OtpService } from 'src/otp/service/otp.service';
+import { OTPService } from 'src/otp/service/otp.service';
+import { TokenService } from 'src/jwt/jwt.service';
+import { OtpType } from 'src/otp/types';
 import { SignUpDto } from '../dto/sign-up.dto';
-import { AuthUserDto } from '../dto/auth-user.dto';
+import { Role } from '../types';
 
 @Injectable()
 export class UserService {
@@ -29,9 +30,9 @@ export class UserService {
     private readonly jwtService: JwtService,
     private readonly bcryptService: BcryptService,
     @Inject(REQUEST) private request: Request,
+    private readonly OtpService: OTPService,
     private readonly tokenService: TokenService,
     private readonly mailerService: MailerService,
-    private readonly otpService: OtpService,
   ) {
     this._logger = new Logger('UserService');
   }
@@ -90,14 +91,17 @@ export class UserService {
 
     //checking 2fa
     if (user.isTwoFAEnabled) {
-      const secret = await this.otpService.storeOtp({});
+      const secret = await this.OtpService.generate(
+        user.email,
+        OtpType.VERIFY_EMAIL,
+      );
 
-      await this.mailerService.send<SendOtpContext>({
-        to: [user],
-        subject: 'Two Factor Authentication Request',
-        template: 'send-otp',
-        context: { secret, intent: 'two factor authentication' },
-      });
+      // await this.mailerService.send<SendOtpContext>({
+      //   to: [user],
+      //   subject: 'Two Factor Authentication Request',
+      //   template: 'send-otp',
+      //   context: { secret, intent: 'two factor authentication' },
+      // });
 
       return {
         message: `OTP send to ${user.email}, please use that otp to pass two FA`,
@@ -141,7 +145,7 @@ export class UserService {
   async create(data: Partial<User>): Promise<User> {
     return await this.userModel.create({
       ...data,
-      roles: data.roles?.map((x) => x._id),
+      role: data.role,
       password: this.bcryptService.makeHash(data.password),
     });
   }
@@ -149,36 +153,36 @@ export class UserService {
   /************************************************************************** */
   /************************** CREATE USER WITHOUT PASSWORD ****************** */
   /************************************************************************** */
-  async createWithoutPassword(body: SocialSignUpDto): Promise<User> {
-    const standardRole = await this.roleService.findByName(
-      RoleType.STANDARD_USER,
-    );
-    return await this.userModel.create({
-      ...body,
-      roles: [standardRole],
-    });
-  }
+  // async createWithoutPassword(body: SocialSignUpDto): Promise<User> {
+  //   const standardRole = await this.roleService.findByName(
+  //     RoleType.STANDARD_USER,
+  //   );
+  //   return await this.userModel.create({
+  //     ...body,
+  //     roles: [standardRole],
+  //   });
+  // }
 
   /************************************************************************** */
   /****************** SAVE STRIPE CUSTOMER ID IN USER *********************** */
   /************************************************************************** */
-  async saveStripeCustomerId(
-    user: User,
-    stripeCustomerId: string,
-  ): Promise<boolean> {
-    const updated = await this.userModel.updateOne(
-      { _id: user._id },
-      { $set: { stripeCustomerId } },
-    );
+  // async saveStripeCustomerId(
+  //   user: User,
+  //   stripeCustomerId: string,
+  // ): Promise<boolean> {
+  //   const updated = await this.userModel.updateOne(
+  //     { _id: user._id },
+  //     { $set: { stripeCustomerId } },
+  //   );
 
-    if (!updated.acknowledged) {
-      this._logger.error('Stripe CustomerId not saved in user');
-    }
-    this._logger.log('Stripe CustomerId saved in user');
-    return updated.acknowledged ? true : false;
-  }
+  //   if (!updated.acknowledged) {
+  //     this._logger.error('Stripe CustomerId not saved in user');
+  //   }
+  //   this._logger.log('Stripe CustomerId saved in user');
+  //   return updated.acknowledged ? true : false;
+  // }
 
-  async registerUser(body: SignUpDto, roles?: Role[]) {
+  async registerUser(body: SignUpDto, role?: Role) {
     let user = await this.findByEmail(body.email);
 
     if (user) {
@@ -187,7 +191,7 @@ export class UserService {
 
     user = await this.create({
       ...body,
-      roles,
+      role,
     });
 
     return user;
@@ -457,7 +461,7 @@ export class UserService {
     );
   }
 
-  /************************************************************************** */
+  /************************************************************************** */ 
   /************************** TOGGLING TWO FA ******************************* */
   /************************************************************************** */
 

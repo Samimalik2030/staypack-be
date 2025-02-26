@@ -1,10 +1,15 @@
 import { Prop } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { Exclude, Expose } from 'class-transformer';
-import { MongoFactory } from 'src/app/decorators/mongo-factory';
-import { MongoSchema } from 'src/app/decorators/mongo.schema';
-import { Role } from '../types';
+import { Exclude, Expose, Transform } from 'class-transformer';
+import { HydratedDocument } from 'mongoose';
 import { BaseSchema } from 'src/app/decorators/base.schema';
+import { MongoSchema } from 'src/app/decorators/mongo.schema';
+import { transformObjectId } from 'src/app/decorators/objectToId';
+import { FileDto } from 'src/shared/dtos/file.dto';
+import { Role } from '../types';
+import { MongoFactory } from 'src/app/decorators/mongo-factory';
+
+export type UserDocument = HydratedDocument<User>;
 
 @MongoSchema()
 export class User extends BaseSchema {
@@ -22,8 +27,15 @@ export class User extends BaseSchema {
   @Prop()
   email: string;
 
-  @ApiProperty({ enum: Role })
-  @Prop({ enum: Role, default: Role.STANDARD_USER })
+  @ApiProperty({ type: FileDto })
+  @Prop({ default: null })
+  avatar: FileDto;
+
+  @ApiProperty()
+  @Transform(transformObjectId)
+  @Prop({
+    enum: Role,
+  })
   role: Role;
 
   @Exclude()
@@ -33,10 +45,6 @@ export class User extends BaseSchema {
   @Exclude()
   @Prop()
   password: string;
-
-  @Exclude()
-  @Prop()
-  confirmPassword: string;
 
   @Exclude()
   @Prop({ default: 0 })
