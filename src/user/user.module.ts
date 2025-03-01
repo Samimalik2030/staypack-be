@@ -7,22 +7,21 @@ import { JwtModule } from '@nestjs/jwt';
 import { TokenService } from 'src/jwt/jwt.service';
 import { OtpModule } from 'src/otp/otp.module';
 @Module({
-  imports:[
-    MongooseModule.forFeature([{name:User.name,schema:UserSchema}]),
+  imports: [
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     JwtModule.register({
       global: true,
-      secret: 'your_secret_key',
+      secret: process.env.SECRET_KEY,
       signOptions: {
-        expiresIn: '1d',
-        audience: 'www.tn-nest.com',
-        issuer: 'www.tn-nest.com',
+        expiresIn: '1h',
+        audience: process.env.DOMAIN,
+        issuer: process.env.DOMAIN,
       },
-    }), 
-     OtpModule
+    }),
+    OtpModule,
   ],
   controllers: [UserController],
-  providers: [UserService,TokenService],
-  exports:[UserService],
-
+  providers: [UserService, TokenService],
+  exports: [UserService],
 })
 export class UserModule {}
