@@ -6,21 +6,25 @@ import { CreateStudentDTO, } from '../dto/student.dto';
 import { UpdateStudentDTO } from '../dto/updateStudent.dto';
 import { User } from 'src/user/schema/user.schema';
 import { StudentQueryDTO } from '../dto/update-student.dto';
+import { LaundryPlan } from '../types';
 
 @Injectable()
 export class StudentService {
-    constructor(@InjectModel(Student.name) private readonly studentModel: Model<Student>) { }
+    constructor(@InjectModel(Student.name) private readonly studentModel: Model<Student>,) { }
 
     async getAllStudents() { 
         return await this.studentModel.find()
     }
-    async filterStudents(data:any,usersIds:string[]){
+    async filterStudents(filter:any){
       
          return await this.studentModel.find({
-           'personalInformation.gender':data.gender,
-          user:{$in:usersIds}
-           
-        })
+           'personalInformation.gender':filter.gender,
+        user:{$in:filter.usersIds}  ,
+        'laundryPreference.laundryPlan':filter.laundryPlan,
+        'educationalInformation.collegeName':filter.collegeName,
+        'identificationAndVerification.nationalID':filter.nationalId,
+        'paymentInformation.paymentMethod':filter.paynentMethod
+        }).populate("user")
     }
 
     async store(data: CreateStudentDTO, user: User) {
