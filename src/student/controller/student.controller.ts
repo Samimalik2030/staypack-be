@@ -11,7 +11,6 @@ import { StudentQueryDTO } from '../dto/update-student.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 
-
 @Controller('student')
 @ApiTags()
 // @UseGuards(AuthGuard)
@@ -120,9 +119,7 @@ export class StudentController {
     @Post('/upload-file')
     async uploadFile(
         @UploadedFile() file:Express.Multer.File
-    ){
-   
-    }
+    ){}
 
 }
 

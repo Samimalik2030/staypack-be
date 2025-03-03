@@ -10,7 +10,7 @@ import { LaundryPlan } from '../types';
 
 @Injectable()
 export class StudentService {
-    constructor(@InjectModel(Student.name) private readonly studentModel: Model<Student>,) { }
+    constructor(@InjectModel(Student.name) private readonly studentModel: Model<Student>) { }
 
     async getAllStudents() { 
         return await this.studentModel.find()

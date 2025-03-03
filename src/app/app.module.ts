@@ -15,16 +15,26 @@ import { StudentModule } from 'src/student/student.module';
 import { ImageKitModule } from 'src/image-kit/image-kit.module';
 import { MailerModule } from 'src/mailer/mailer.module';
 import { HostModule } from 'src/host/host.module';
+import { HostelModule } from 'src/hostel/module/hostel.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
     MulterModule.register({ dest: './uploads' }),
     EventEmitterModule.forRoot(),
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot(), // Load environment variables
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         uri: configService.get('MONGO_URI'),
+      }),
+      inject: [ConfigService],
+    }),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET'),
+        signOptions: { expiresIn: '1h' }, // Token expires in 1 hour
       }),
       inject: [ConfigService],
     }),
@@ -34,6 +44,7 @@ import { HostModule } from 'src/host/host.module';
     ImageKitModule,
     MailerModule,
     HostModule,
+    HostelModule
   ],
   controllers: [AppController],
   providers: [

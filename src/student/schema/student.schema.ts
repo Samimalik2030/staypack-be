@@ -7,7 +7,7 @@ import { MongoSchema } from "src/app/decorators/mongo.schema";
 
 
 
-@Schema()
+@MongoSchema()
 export class EducationalInformationSchema {
     
     @Prop({ type: String })

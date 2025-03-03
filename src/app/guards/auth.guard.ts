@@ -5,7 +5,7 @@ import {
     UnauthorizedException,
   } from '@nestjs/common';
   import { Request } from 'express';
-import { TokenService } from 'src/jwt/jwt.service';
+import { JwtTokenService } from 'src/jwt/jwt.service';
 import { User } from 'src/user/schema/user.schema';
 import { UserService } from 'src/user/service/user.service';
 
@@ -14,7 +14,7 @@ import { UserService } from 'src/user/service/user.service';
   export class AuthGuard implements CanActivate {
     constructor(
       private readonly userService: UserService,
-      private readonly jwtService: TokenService,
+      private readonly jwtService: JwtTokenService,
   
     ) {}
     async canActivate(context: ExecutionContext): Promise<boolean> {

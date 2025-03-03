@@ -4,8 +4,10 @@ import { UserService } from './service/user.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './schema/user.schema';
 import { JwtModule } from '@nestjs/jwt';
-import { TokenService } from 'src/jwt/jwt.service';
+
 import { OtpModule } from 'src/otp/otp.module';
+import { JwtTokenService } from 'src/jwt/jwt.service';
+import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
@@ -19,9 +21,11 @@ import { OtpModule } from 'src/otp/otp.module';
       },
     }),
     OtpModule,
+    ConfigModule
+    
   ],
   controllers: [UserController],
-  providers: [UserService, TokenService],
+  providers: [UserService,JwtTokenService],
   exports: [UserService],
 })
 export class UserModule {}

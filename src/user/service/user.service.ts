@@ -5,17 +5,16 @@ import { Model } from 'mongoose';
 import { SignUpDto } from '../dto/sign-up.dto';
 import { SignInDto } from '../dto/sign-in.dto';
 import { forgotPasswordDto } from '../dto/forgotPassword.dto';
-import { TokenService } from 'src/jwt/jwt.service';
 import { OtpService } from 'src/otp/service/otp.service';
 import { OtpType } from 'src/otp/types';
 import { verifyOTPDto } from '../dto/verify-otp.dto';
-import { Host } from 'src/host/schema/host.mongo';
+import { JwtTokenService } from 'src/jwt/jwt.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User.name) private readonly UserModel: Model<User>,
-    private readonly jwtTokenService: TokenService,
+    private readonly jwtTokenService: JwtTokenService,
     private readonly otpService: OtpService
 
 

@@ -3,8 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UpdateHostDTO } from '../dto/updateHost.dto';
 import { User } from 'src/user/schema/user.schema';
-import { Host } from '../schema/host.mongo';
 import { CreateHostDTO } from '../dto/create-host.dto';
+import { Host } from '../schema/host.mongo';
 
 @Injectable()
 export class HostService {
@@ -29,6 +29,7 @@ export class HostService {
         return foundedHost  
     }
     async findOne(data:Partial<Host>){
+        console.log(data)
         const foundedHost = await this.hostModel.findOne(data).populate('user')
         return foundedHost
     }
