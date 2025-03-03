@@ -4,7 +4,7 @@ import { BaseSchema } from "src/app/decorators/base.schema";
 import { MongoFactory } from "src/app/decorators/mongo-factory";
 import { MongoSchema } from "src/app/decorators/mongo.schema";
 import { HostelType } from "../types";
-import { Adress } from "./googleAddress.schema";
+import { Adress } from "./Address.schema";
 
 @Schema({_id:false})
 export class HostelInformation{

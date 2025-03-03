@@ -3,7 +3,7 @@ import { IsEnum, IsString, ValidateNested } from "class-validator";
 import { HostelType } from "../types";
 import { Schema } from "mongoose";
 import { Type } from "class-transformer";
-import { Adress } from "../schema/googleAddress.schema";
+import { Adress } from "../schema/Address.schema";
 
 export class UpdateHostelInformationDTO{
     @ApiProperty({type:String,default:null})

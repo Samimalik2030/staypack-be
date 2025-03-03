@@ -1,9 +1,6 @@
 import { Prop, Schema } from "@nestjs/mongoose";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNumber, IsString, Max, Min } from "class-validator";
-import { BaseSchema } from "src/app/decorators/base.schema";
-import { MongoFactory } from "src/app/decorators/mongo-factory";
-import { MongoSchema } from "src/app/decorators/mongo.schema";
 
 @Schema({_id:false})
 export class Adress {
