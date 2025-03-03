@@ -2,18 +2,18 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsString, ValidateNested } from "class-validator";
 import { HostelType } from "../types";
 import { Schema } from "mongoose";
-import { GoogleAddress } from "../schema/googleAddress.schema";
 import { Type } from "class-transformer";
+import { Adress } from "../schema/googleAddress.schema";
 
 export class UpdateHostelInformationDTO{
     @ApiProperty({type:String,default:null})
     @IsString()
     hoetelName:string
 
-    @ApiProperty({type:GoogleAddress,default:null})
+    @ApiProperty({type:Adress,default:null})
     @ValidateNested()
-    @Type(()=>GoogleAddress)
-    address:GoogleAddress
+    @Type(()=>Adress)
+    address:Adress
 
     @ApiProperty({type:String,default:null})
     @IsString()

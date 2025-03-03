@@ -8,7 +8,7 @@ import { User } from "src/user/schema/user.schema";
 import { Schema } from "mongoose";
 
 
-MongoSchema({_id:false})
+@MongoSchema({_id:false})
 export class PersonalInformation extends BaseSchema{
 
     @Prop({ type: String, required: true})

@@ -1,9 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsString, ValidateNested } from "class-validator";
 import { HostelType } from "../types";
-import { GoogleAddress } from "../schema/googleAddress.schema";
 import { Type } from "class-transformer";
-import { UpdateGoogleAddressDTO } from "./google-address.dto";
+import { UpdateAdressDTO } from "./google-address.dto";
 
 export class CreateHostelDTO {
     @ApiProperty({ type: String, example: "Sunny Hostel", required: true })
@@ -11,13 +10,13 @@ export class CreateHostelDTO {
     name: string;
 
     @ApiProperty({
-        type:UpdateGoogleAddressDTO,
+        type:UpdateAdressDTO,
         required: true,
-        example: UpdateGoogleAddressDTO
+        example: UpdateAdressDTO
     })
     @ValidateNested()
-    @Type(() => UpdateGoogleAddressDTO)
-    address: UpdateGoogleAddressDTO;
+    @Type(() => UpdateAdressDTO)
+    address: UpdateAdressDTO;
 
     @ApiProperty({ enum: HostelType, example: HostelType.BOYS, required: true })
     @IsEnum(HostelType)

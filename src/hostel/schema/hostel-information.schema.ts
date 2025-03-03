@@ -1,12 +1,12 @@
-import { Prop } from "@nestjs/mongoose";
+import { Prop, Schema } from "@nestjs/mongoose";
 import { ApiProperty } from "@nestjs/swagger";
 import { BaseSchema } from "src/app/decorators/base.schema";
 import { MongoFactory } from "src/app/decorators/mongo-factory";
-import { GoogleAddress } from "./googleAddress.schema";
 import { MongoSchema } from "src/app/decorators/mongo.schema";
 import { HostelType } from "../types";
+import { Adress } from "./googleAddress.schema";
 
-@MongoSchema({_id:false})
+@Schema({_id:false})
 export class HostelInformation{
     @Prop({type:String,required:true})
     @ApiProperty({type:String})
@@ -16,8 +16,8 @@ export class HostelInformation{
     @ApiProperty({enum:HostelType,default:null})
     type:HostelType
 
-    @Prop({ type: GoogleAddress ,default:null})
-    @ApiProperty({ type: () => GoogleAddress })
-    address: GoogleAddress;
+    @Prop({ type: Adress ,default:null})
+    @ApiProperty({ type: () => Adress })
+    address: Adress;
 }
 export const HostelInformationMongoSchema = MongoFactory.createSchema(HostelInformation)

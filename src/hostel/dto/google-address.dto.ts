@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNumber, IsString, Min, Max } from "class-validator";
 
-export class UpdateGoogleAddressDTO {
+export class UpdateAdressDTO {
     @ApiProperty({ type: String, example: "San Francisco" })
     @IsString()
     city: string;

@@ -1,12 +1,12 @@
-import { Prop } from "@nestjs/mongoose";
+import { Prop, Schema } from "@nestjs/mongoose";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNumber, IsString, Max, Min } from "class-validator";
 import { BaseSchema } from "src/app/decorators/base.schema";
 import { MongoFactory } from "src/app/decorators/mongo-factory";
 import { MongoSchema } from "src/app/decorators/mongo.schema";
 
-@MongoSchema({_id:false})
-export class GoogleAddress {
+@Schema({_id:false})
+export class Adress {
     
     @Prop({ type: String, required: true })
     @ApiProperty({ type: String, example: "San Francisco", default: "San Francisco" })
@@ -31,4 +31,4 @@ export class GoogleAddress {
     longitude: number;
 }
 
-export const GoogleAddressMongoSchema = MongoFactory.createSchema(GoogleAddress);
+
