@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, Patch } from '@nestjs/common';
 import { PropertyService } from '../service/property.service';
 import { CreatePropertyDto } from '../dto/create-property.dto';
 import { UpdatePropertyDto } from '../dto/update-property.dto';
@@ -27,7 +27,7 @@ export class PropertyController {
     }
 
     // Update a property by ID
-    @Put(':id')
+    @Patch(':id')
     async update(@Param('id') id: string, @Body() updatePropertyDto: UpdatePropertyDto) {
         return this.propertyService.update(id, updatePropertyDto);
     }

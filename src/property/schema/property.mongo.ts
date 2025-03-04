@@ -99,9 +99,9 @@ export class Property extends BaseSchema  {
 
 
 
-  @Prop({ type: Schema.Types.ObjectId, ref: 'Host' })
-  @Transform(transformObjectId)
-  owner: Host;
+//   @Prop({ type: Schema.Types.ObjectId, ref: 'Host' })
+//   @Transform(transformObjectId)
+//   owner: Host;
 }
 
 export const PropertySchema = MongoFactory.createSchema(Property);
