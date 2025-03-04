@@ -17,6 +17,7 @@ import { MailerModule } from 'src/mailer/mailer.module';
 import { HostModule } from 'src/host/host.module';
 import { HostelModule } from 'src/hostel/module/hostel.module';
 import { JwtModule } from '@nestjs/jwt';
+import { PropertyModule } from 'src/property/property.module';
 
 @Module({
   imports: [
@@ -44,7 +45,8 @@ import { JwtModule } from '@nestjs/jwt';
     ImageKitModule,
     MailerModule,
     HostModule,
-    HostelModule
+    HostelModule,
+    PropertyModule
   ],
   controllers: [AppController],
   providers: [
