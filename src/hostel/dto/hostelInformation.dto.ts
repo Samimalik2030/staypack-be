@@ -3,17 +3,17 @@ import { IsEnum, IsString, ValidateNested } from "class-validator";
 import { HostelType } from "../types";
 import { Schema } from "mongoose";
 import { Type } from "class-transformer";
-import { Adress } from "../schema/Address.schema";
+import { Address } from "../schema/address.schema";
 
 export class UpdateHostelInformationDTO{
     @ApiProperty({type:String,default:null})
     @IsString()
     hoetelName:string
 
-    @ApiProperty({type:Adress,default:null})
+    @ApiProperty({type:Address,default:null})
     @ValidateNested()
-    @Type(()=>Adress)
-    address:Adress
+    @Type(()=>Address)
+    address:Address
 
     @ApiProperty({type:String,default:null})
     @IsString()

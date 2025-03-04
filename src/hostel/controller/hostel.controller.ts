@@ -1,12 +1,13 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Req, UnauthorizedException, UnprocessableEntityException, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Query, Req, UnauthorizedException, UnprocessableEntityException, UseGuards } from '@nestjs/common';
 import { HostelService } from '../service/hostel.service';
 import { UserService } from 'src/user/service/user.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/app/guards/auth.guard';
 import { UpdateHostelDTO } from '../dto/update-hostel.dto';
-import { Request } from 'express';
+import { query, Request } from 'express';
 import { CreateHostelDTO } from '../dto/createhHostel.dto';
 import { HostService } from 'src/host/service/host.service';
+import { HostelQueryDTO } from '../dto/updatedHosrtel.dto';
 
 @Controller('hostels')
 @ApiBearerAuth()
@@ -21,6 +22,27 @@ export class HostelController {
     @Get()
     async getAllHostels(){
         return await this.hostelService.getAllHostels()
+    }
+    @Get('/filter')
+    async filter(@Query() query:HostelQueryDTO){
+        let usersIds;
+        if(query.firstName){
+        const filtereUsers = await this.userService.filter({
+            firstName:query.firstName
+        })
+        const usersIds = filtereUsers.map((user) =>user._id)
+    // console.log(usersIds,'userIds')
+    const filteredHosts = await this.hostService.filter({
+        user:{$in:usersIds} as any
+    })
+    console.log(filteredHosts,'filtered hosts')
+    const hostsIds = filteredHosts.map((host)=>host._id)
+      const filterHost= await this.hostelService.filter({
+        host:{$in:hostsIds} as any
+      })
+      return filterHost
+    }
+    
     }
 
     @Post()

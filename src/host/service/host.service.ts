@@ -24,6 +24,9 @@ export class HostService {
         console.log(createdHost,'created hosst')
         return createdHost
     }
+    async filter(query:Partial<Host>){
+        return await this.hostModel.find(query)
+    }
     async getHost(id:string):Promise<Host|null>{
         const foundedHost = await this.hostModel.findById(id).populate('user') 
         return foundedHost  

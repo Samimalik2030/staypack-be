@@ -4,7 +4,9 @@ import { BaseSchema } from "src/app/decorators/base.schema";
 import { MongoFactory } from "src/app/decorators/mongo-factory";
 import { MongoSchema } from "src/app/decorators/mongo.schema";
 import { HostelType } from "../types";
-import { Adress } from "./Address.schema";
+import { Address } from "./address.schema";
+
+
 
 @Schema({_id:false})
 export class HostelInformation{
@@ -16,8 +18,8 @@ export class HostelInformation{
     @ApiProperty({enum:HostelType,default:null})
     type:HostelType
 
-    @Prop({ type: Adress ,default:null})
-    @ApiProperty({ type: () => Adress })
-    address: Adress;
+    @Prop({ type: Address ,default:null})
+    @ApiProperty({ type: () => Address })
+    address: Address;
 }
 export const HostelInformationMongoSchema = MongoFactory.createSchema(HostelInformation)

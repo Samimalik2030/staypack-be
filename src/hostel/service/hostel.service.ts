@@ -6,6 +6,7 @@ import { UpdateHostelDTO } from '../dto/update-hostel.dto';
 import { CreateHostelDTO } from '../dto/createhHostel.dto';
 import { Host } from 'src/host/schema/host.mongo';
 import { instanceToPlain } from 'class-transformer';
+import { HostelQueryDTO } from '../dto/updatedHosrtel.dto';
 
 @Injectable()
 export class HostelService {
@@ -15,6 +16,17 @@ export class HostelService {
 
   async getAllHostels() {
     return await this.hostelModel.find();
+  }
+  async filter(query:Partial<Hostel>){
+   
+    const filteredHostel = await this.hostelModel.find(query).populate({
+        path:"host",
+        populate:{
+            path:"user"
+        }
+    })
+    return filteredHostel
+    
   }
 
   async create(data: CreateHostelDTO, host: Host) {

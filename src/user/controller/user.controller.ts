@@ -83,7 +83,7 @@ export class UserController {
       body.password,
       body.confirmPassword,
     );
-    return updatedUser;
+    return updatedUser; 
   }
 
     async changeAvatar(@UploadedFile() file:Express.Multer.File){

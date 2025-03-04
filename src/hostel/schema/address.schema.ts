@@ -3,7 +3,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsNumber, IsString, Max, Min } from "class-validator";
 
 @Schema({_id:false})
-export class Adress {
+export class Address {
     
     @Prop({ type: String, required: true })
     @ApiProperty({ type: String, example: "San Francisco", default: "San Francisco" })

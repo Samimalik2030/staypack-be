@@ -20,8 +20,8 @@ export class UserService {
 
   ) { }
 
-  async filter(data:Partial<User>):Promise<User[]> {
-    return await this.UserModel.find(data)
+  async filter(query:Partial<User>):Promise<User[]> {
+    return await this.UserModel.find(query)
   }
 
   async findByEmail(email: string) {
